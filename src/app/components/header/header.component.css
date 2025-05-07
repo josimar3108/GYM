@@ -1,0 +1,45 @@
+body {
+    margin: 0;
+    font-family: "Bebas Neue", sans-serif;
+    background: linear-gradient(180deg, rgb(10, 3, 53) 0%, rgb(2, 5, 17) 35%, rgb(3, 0, 17) 100%);
+    color: #fff;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3.5px 100px;
+    background: linear-gradient(180deg, rgb(2, 0, 12) 0%, rgb(4, 14, 58) 35%, rgb(0, 0, 0) 100%);
+}
+
+.logo img{
+    width: 95%;
+    height: 130px;
+}
+
+.login img{
+    width: 95%;
+    height: 60px;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 45px;
+    font-weight: bold;
+    color: white;
+}
+
+.nav-links li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.call-button {
+    background: linear-gradient(90deg, rgb(221, 216, 114) 10%, rgb(238, 236, 144) 35%, rgb(225, 228, 85) 100%);
+    color: #000000;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+}
