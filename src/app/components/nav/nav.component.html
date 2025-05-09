@@ -3,11 +3,11 @@
       <img src="logo.jpg" alt="Logo">
     </div>
     <ul class="nav-links">
-      <li><a href="#home">Inicio</a></li>
-      <li><a href="#services">Servicios</a></li>
-      <li><a href="#contact">Contacto</a></li>
+      <li><a [routerLink]="['/index']">Inicio</a></li>
+      <li><a [routerLink]="['/servicios']">Servicios</a></li>
+      <li><a [routerLink]="['/contacto']">Contacto</a></li>
     </ul>
-    <a routerLink="/login" class="login">
+    <a [routerLink]="['/login']" class="login">
       <img src="login.png" alt="Login">
     </a>
   </nav>
