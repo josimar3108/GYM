@@ -29,6 +29,7 @@ nav {
     gap: 45px;
     font-weight: bold;
     color: white;
+    font-size: 1.3rem;
 }
 
 .nav-links li a {
