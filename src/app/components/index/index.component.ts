@@ -3,11 +3,12 @@ import { NavComponent } from '../nav/nav.component';
 import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
 import { LoginComponent } from '../login/login.component';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-index',
   standalone: true,
-  imports: [NavComponent,HeaderComponent,FooterComponent, LoginComponent],
+  imports: [NavComponent,HeaderComponent,FooterComponent, LoginComponent,RouterModule],
   templateUrl: './index.component.html',
   styleUrl: './index.component.css'
 })

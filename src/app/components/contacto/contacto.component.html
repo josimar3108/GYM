@@ -1,1 +1,14 @@
-<p>contacto works!</p>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+
+<div id="contacto-section">
+  <h2 class="titulo">Contacto</h2>
+  <div class="card-group row row-cols-1 row-cols-lg-3 g-4">
+    @for (integrante of equipo; track integrante.nombre) {
+      <div class="card h-100 animate__animated">
+        <h3>{{ integrante.nombre }}</h3>
+        <img [src]="integrante.imagen" [alt]="integrante.nombre" width="250">
+        <p>Rol: {{ integrante.rol }}</p>
+      </div>
+    }
+  </div>
+</div>
