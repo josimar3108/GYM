@@ -1,0 +1,78 @@
+   <section id="yachts" class="yacht-list">
+     <h2>Horarios</h2>
+    <div class="yacht-container">
+           
+        <div class="yacht-card" data-price="4900">
+            <img src="boxeo.jpg" alt="74' Sunseeker 2023">
+            <div class="yacht-info">
+                <h3>Boxeo</h3>
+                <p>De lunes a domingo: 5 pm - 10 pm</p>
+            </div>
+        </div>
+        <div class="yacht-card" data-price="4500">
+            <img src="mma.jpg" alt="88' Princess Overtime">
+            <div class="yacht-info">
+                <h3>MMA</h3>
+                <p>De lunes a viernes: 3 pm - 7 pm</p>
+            </div>
+        </div>
+        <div class="yacht-card" data-price="4500">
+            <img src="zumba.jpg" alt="68' Galeon 2025">
+            <div class="yacht-info">
+                <h3>Zumba</h3>
+                <p>De viernes a domingo: 7 am - 2 pm</p>
+
+            </div>
+        </div>
+        <div class="yacht-card" data-price="3200">
+            <img src="pesas.jpg" alt="53' Galeon Infinity">
+            <div class="yacht-info">
+                <h3>Pesas</h3>
+                <p>lunes a domingo: 6 am - 10 pm</p>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+<section class="full-calendar-section">
+  <div class="container">
+    <h2 class="section-title">CALENDARIO ANUAL {{ currentYear }}</h2>
+    
+
+    <div class="year-controls">
+    <button (click)="changeYear(-1)" class="nav-button">← AÑO ANTERIOR</button>
+    <h3 class="current-year">{{ currentYear }}</h3>
+    <button (click)="changeYear(1)" class="nav-button">SIGUIENTE AÑO →</button>
+    </div>
+
+    <div class="full-calendar">
+
+      <div *ngFor="let month of months" class="month-card">
+        <h3 class="month-header">{{ month.name | titlecase }}</h3>
+        <div class="days-grid">
+
+          <div class="day-header" *ngFor="let day of ['L', 'M', 'X', 'J', 'V', 'S', 'D']">
+            {{ day }}
+          </div>
+          
+          <!-- Días vacíos para alinear -->
+          <div *ngFor="let empty of getEmptyDays(month.firstDayIndex)" 
+               class="calendar-day empty"></div>
+          
+          <!-- Días del mes -->
+          <div *ngFor="let day of month.days" 
+               class="calendar-day"
+               [class.today]="isToday(day, month.index)"
+               [class.weekend]="isWeekend(day, month.index)">
+            {{ day }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
