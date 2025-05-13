@@ -81,7 +81,6 @@
                   <th>Nombre</th>
                   <th>Email</th>
                   <th>Mensaje</th>
-                  <th>Fecha</th>
                   <th class="text-center">Acciones</th>
                 </tr>
               </thead>
@@ -91,7 +90,6 @@
                     <td>{{ mensaje.nombre }}</td>
                     <td>{{ mensaje.email }}</td>
                     <td>{{ mensaje.mensaje }}</td>
-                    <td>{{ mensaje.fecha | date:'short' }}</td>
                     <td class="text-center">
                       <button class="btn btn-danger btn-lg mb-2 me-3 px-4 py-2" (click)="eliminarMensaje(mensaje.id)">
                         <i class="bi bi-trash"></i> Eliminar
