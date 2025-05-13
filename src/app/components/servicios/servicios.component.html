@@ -1,0 +1,89 @@
+<mat-toolbar color="primary" class="shadow">
+  <span class="fs-3 fw-bold w-100 text-center">GYM - Planes y Entrenadores</span>
+</mat-toolbar>
+
+<div id="planes-section">
+  <h2 class="titulo text-center text-light mb-4">Planes Disponibles</h2>
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 justify-content-center">
+    @for (plan of planes; track plan.nombre) {
+      <div class="col d-flex">
+        <mat-card class="h-100 w-100 bg-dark text-light shadow plan-card">
+          <mat-card-header>
+            <mat-card-title class="text-center fs-4 text-primary">{{ plan.nombre }}</mat-card-title>
+          </mat-card-header>
+          <img mat-card-image [src]="plan.imagen" [alt]="plan.nombre" class="mx-auto mt-3 rounded" style="max-width:220px;">
+          <mat-card-content>
+            <ul class="mt-3 mb-2">
+              @for (item of plan.caracteristicas; track item) {
+                <li class="fs-5">{{ item }}</li>
+              }
+            </ul>
+            <p class="text-center fs-4 mt-3"><strong class="text-success">{{ plan.precio }}</strong></p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    }
+  </div>
+</div>
+
+
+<div class="buscador-entrenador-container m-0 d-flex justify-content-center">
+  <mat-form-field appearance="outline" class="w-50 buscador-dark">
+    <mat-label class="text-white">Buscar entrenador, especialidad o descripción</mat-label>
+    <input matInput [(ngModel)]="busqueda" (input)="buscar()" class="text-light">
+    <button mat-icon-button matSuffix disabled>
+      <mat-icon color="primary">search</mat-icon>
+    </button>
+  </mat-form-field>
+</div>
+
+<div id="entrenadores-section">
+  <h2 class="titulo text-center text-light mb-4">Entrenadores</h2>
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 justify-content-center">
+   @for (entrenador of entrenadoresFiltrados; track entrenador.nombre) {
+  <div class="col d-flex">
+  <mat-card
+  class="h-100 w-100 bg-dark text-light shadow entrenador-card"
+  [ngClass]="{'entrenador-seleccionado': selectedEntrenadorId === entrenador.id}"
+  (click)="seleccionarEntrenador(entrenador.id)"
+>
+      <img mat-card-image [src]="entrenador.image" [alt]="entrenador.nombre" class="mx-auto mt-3 rounded-circle" style="max-width:160px;">
+      <mat-card-content>
+        <h5 class="text-primary text-center mt-3">{{ entrenador.nombre }}</h5>
+        <p class="text-center mb-1">{{ entrenador.descripcion }}</p>
+        <p class="text-center mb-1"><strong>Edad:</strong> {{ entrenador.edad }}</p>
+        <p class="text-center mb-1"><strong>Especialidad:</strong> {{ entrenador.especialidad }}</p>
+      </mat-card-content>
+      <mat-card-actions class="justify-content-center">
+        <a mat-raised-button color="primary" [routerLink]="['/servicios', entrenador.id]">
+          <mat-icon>info</mat-icon>
+          Ver detalle
+        </a>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+}
+    @if (entrenadoresFiltrados.length === 0) {
+      <div class="col-12">
+        <mat-card class="alert alert-warning text-center fs-4 my-5 bg-dark text-light border-0">
+          <mat-icon color="warn">warning</mat-icon>
+          Datos no encontrados
+        </mat-card>
+      </div>
+    }
+  </div>
+
+
+<div class="video-container my-5">
+  <div class="video-bg">
+    <iframe
+      width="800"
+      height="450"
+      [src]="'https://www.youtube.com/embed/c0xT9NBCatM' | safe"
+      title="Video de presentación"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen>
+    </iframe>
+  </div>
+</div>
