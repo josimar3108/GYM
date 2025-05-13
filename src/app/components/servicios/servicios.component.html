@@ -1,8 +1,8 @@
-<mat-toolbar color="primary" class="mb-4 shadow">
+<mat-toolbar color="primary" class="shadow">
   <span class="fs-3 fw-bold w-100 text-center">GYM - Planes y Entrenadores</span>
 </mat-toolbar>
 
-<div id="planes-section" class="mb-5">
+<div id="planes-section">
   <h2 class="titulo text-center text-light mb-4">Planes Disponibles</h2>
   <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 justify-content-center">
     @for (plan of planes; track plan.nombre) {
@@ -27,7 +27,7 @@
 </div>
 
 
-<div class="buscador-entrenador-container my-5 d-flex justify-content-center">
+<div class="buscador-entrenador-container m-0 d-flex justify-content-center">
   <mat-form-field appearance="outline" class="w-50 buscador-dark">
     <mat-label class="text-white">Buscar entrenador, especialidad o descripción</mat-label>
     <input matInput [(ngModel)]="busqueda" (input)="buscar()" class="text-light">

@@ -110,17 +110,16 @@ html{
 .buscador-entrenador-container {
   width: 100%;
   background: #020822;
-  border-radius: 1.5rem;
   padding: 2rem 0;
  justify-content: center;
 }
 
 .buscador-entrenador {
   max-width: 600px;
-
+  margin: 0;
   width: 100%;
   box-shadow: 0 4px 24px 0 rgba(253, 253, 253, 0.836);
-  border-radius: 2rem;
+  border-radius: 0;
   overflow: hidden;
    text-align: center;
 }
