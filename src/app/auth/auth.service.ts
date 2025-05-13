@@ -13,9 +13,9 @@ interface User {
 })
 export class AuthService {
   private registeredUsers: User[] = [
-    { username: 'admin1', password: 'admin123', fullName: 'Administrador Uno' },
-    { username: 'admin2', password: 'admin456', fullName: 'Administrador Dos' },
-    { username: 'admin3', password: 'admin789', fullName: 'Administrador Tres' }
+    { username: 'josimar', password: '123', fullName: 'Josimar Maldonado Rosales' },
+    { username: 'ian', password: '456', fullName: 'Ian Hernandez Aranada' },
+    { username: 'gustavo', password: '789', fullName: 'Gustavo Mojica Lamas' }
   ];
 
   private currentUser: User | null = null;

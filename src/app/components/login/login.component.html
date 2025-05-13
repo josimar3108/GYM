@@ -1,20 +1,26 @@
 <div class="login-container">
-  <!-- Mensaje de bienvenida personalizado (oculto inicialmente) -->
-  <div *ngIf="showWelcomeMessage" class="custom-alert">
-    <div class="alert-content">
-      <h3>¡Bienvenido {{ welcomeName }}!</h3>
-      <p>Has iniciado sesión correctamente</p>
-      <button (click)="closeWelcomeMessage()">Aceptar</button>
+
+  @if (showWelcomeMessage)
+  {
+    <div class="custom-alert">
+      <div class="alert-content">
+        <h3>¡Bienvenido {{ welcomeName }}!</h3>
+        <p>Has iniciado sesión correctamente</p>
+        <button (click)="closeWelcomeMessage()">Aceptar</button>
+      </div>
+      <div class="alert-overlay" (click)="closeWelcomeMessage()"></div>
     </div>
-    <div class="alert-overlay" (click)="closeWelcomeMessage()"></div>
-  </div>
+  }
 
   <div class="form-box">
     <h2>Iniciar Sesión</h2>
     
-    <div *ngIf="errorMessage" class="error-message">
-      {{ errorMessage }}
-    </div>
+    @if (errorMessage)
+    {
+      <div class="error-message">
+        {{ errorMessage }}
+      </div>
+    }
 
     <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
       <div class="input-group">

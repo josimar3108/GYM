@@ -1,3 +1,10 @@
+html{
+    background-color: #020822 !important;
+}
+
+
+
+
 #entrenadores-section,
 #planes-section {
     padding: 60px 30px;
@@ -97,4 +104,136 @@
     left: 0;
     color: #ffc107;
     font-size: 1rem;
+}
+
+
+.buscador-entrenador-container {
+  width: 100%;
+  background: #020822;
+  border-radius: 1.5rem;
+  padding: 2rem 0;
+ justify-content: center;
+}
+
+.buscador-entrenador {
+  max-width: 600px;
+
+  width: 100%;
+  box-shadow: 0 4px 24px 0 rgba(253, 253, 253, 0.836);
+  border-radius: 2rem;
+  overflow: hidden;
+   text-align: center;
+}
+
+.buscador-entrenador .form-control {
+  font-size: 1.3rem;
+  background: #ffffff;
+  color: #fff;
+  border-radius: 0 2rem 2rem 0;
+}
+
+.buscador-entrenador .input-group-text {
+  background: #007bff;
+  color: #fff;
+  border-radius: 2rem 0 0 2rem;
+  font-size: 1.5rem;
+  border: none;
+}
+
+.buscador-entrenador .form-control:focus {
+  box-shadow: none;
+  background: #23272b;
+  color: #fff;
+}
+
+body, .bg-dark {
+  background: #181c24 !important;
+}
+
+.titulo {
+  letter-spacing: 2px;
+  font-weight: 700;
+}
+
+.plan-card, .entrenador-card {
+  background: #23272b !important;
+  color: #fff !important;
+  border-radius: 1.5rem;
+  border: none;
+}
+
+.plan-card mat-card-title,
+.entrenador-card h5 {
+  color: #2196f3 !important;
+}
+
+.buscador-dark .mat-form-field-flex {
+  background: #23272b !important;
+  color: #fff !important;
+  border-radius: 2rem;
+}
+
+.buscador-dark .mat-input-element {
+  color: #fff !important;
+}
+
+.buscador-dark .mat-form-field-outline {
+  color: #2196f3 !important;
+}
+
+.mat-card {
+  box-shadow: 0 4px 24px 0 rgba(0,0,0,0.25) !important;
+}
+
+.mat-card img {
+  background: #23272b;
+}
+
+.mat-card-actions a {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+@media (max-width: 900px) {
+  .buscador-dark {
+    width: 95vw !important;
+  }
+}
+
+mat-toolbar {
+  background: #020822 !important;
+  color: #fff !important;
+}
+
+mat-card.entrenador-seleccionado {
+  border: 3px solid #2196f3 !important;
+  box-shadow: 0 0 32px 0 #2196f3 !important;
+  transition: box-shadow 0.2s, border 0.2s;
+  z-index: 2;
+}
+
+
+.video-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.video-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
+  padding: 2rem 0;
+}
+.video-bg {
+  background: #020b4a !important;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px 0 rgba(33,150,243,0.15);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem;
+
 }

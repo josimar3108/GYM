@@ -1,18 +1,78 @@
 import { CommonModule } from '@angular/common';
-import { Component} from '@angular/core';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { Component } from '@angular/core';
+import { AuthService } from '../../auth/auth.service';
+import { ActividadCardComponent } from '../actividad-card/actividad-card.component';
+
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, AbstractControl, ValidationErrors} from '@angular/forms';
 
 @Component({
   selector: 'app-horarios',
-  imports:[CommonModule],
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, ActividadCardComponent, MatSnackBarModule],
   templateUrl: './horarios.component.html',
-  styleUrl: './horarios.component.css'
+  styleUrls: ['./horarios.component.css']
 })
 export class HorariosComponent {
-    currentYear = new Date().getFullYear();
+  currentYear = new Date().getFullYear();
   months: any[] = [];
+  horarioForm!: FormGroup;
+  formEnviado = false;
+  mostrarAlerta = false;
+  inscripcionesUsuario: any[] = [];
+    currentUser: any = null;
+
+     actividades = [
+    { imagen: 'boxeo.jpg', titulo: 'Boxeo', horario: 'De lunes a domingo: 5 pm - 10 pm' },
+    { imagen: 'mma.jpg', titulo: 'MMA', horario: 'De lunes a viernes: 3 pm - 7 pm' },
+    { imagen: 'zumba.jpg', titulo: 'Zumba', horario: 'De viernes a domingo: 7 am - 2 pm' },
+    { imagen: 'pesas.jpg', titulo: 'Pesas', horario: 'Lunes a domingo: 6 am - 10 pm' }
+  ];
+
+constructor(private fb: FormBuilder, private authService: AuthService,private snackBar: MatSnackBar) {}
 
   ngOnInit() {
+    this.currentUser = this.authService.getCurrentUser(); // <-- Agrega esta línea
     this.generateMonths();
+    
+    this.horarioForm = this.fb.group({
+      fullName: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      phone: ['', Validators.required],
+      dob: ['', Validators.required],
+      activity: ['', Validators.required],
+      preferredTime: [''],
+      peopleCount: [1, [Validators.required, Validators.min(1), Validators.max(10)]],
+      comments: [''],
+      terms: [false, Validators.requiredTrue]
+    });
+    this.cargarInscripcionesUsuario();
+  }
+
+     // Validador mejorado para fechas
+  fechaNoPasadaValidator(control: AbstractControl): ValidationErrors | null {
+    if (!control.value) {
+      return null;
+    }
+
+    try {
+      const fechaSeleccionada = new Date(control.value);
+      const hoy = new Date();
+      
+      // Normalizamos las fechas para comparar solo día, mes y año
+      const fechaSel = new Date(fechaSeleccionada.getFullYear(), fechaSeleccionada.getMonth(), fechaSeleccionada.getDate());
+      const fechaHoy = new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate());
+      
+
+      if (fechaSel < fechaHoy) {
+
+        return { 'fechaPasada': true };
+      }
+      return null;
+    } catch (error) {
+      console.error('Error al validar fecha:', error);
+      return { 'fechaInvalida': true };
+    }
   }
 
   generateMonths() {
@@ -41,6 +101,7 @@ export class HorariosComponent {
   }
 
   isWeekend(day: number, monthIndex: number): boolean {
+    
     const dayOfWeek = new Date(this.currentYear, monthIndex, day).getDay();
     return dayOfWeek === 0 || dayOfWeek === 6;
   }
@@ -49,4 +110,123 @@ export class HorariosComponent {
     this.currentYear += offset;
     this.generateMonths();
   }
+  preventTyping(event: KeyboardEvent): void {
+  event.preventDefault();
 }
+
+eliminarInscripcion(id: number): void {
+  const inscripcionesStorage = localStorage.getItem('inscripciones');
+  let inscripciones = inscripcionesStorage ? JSON.parse(inscripcionesStorage) : [];
+  inscripciones = inscripciones.filter((i: any) => i.id !== id);
+  localStorage.setItem('inscripciones', JSON.stringify(inscripciones));
+  this.cargarInscripcionesUsuario();
+}
+
+
+
+
+editarInscripcion(inscripcion: any): void {
+  this.horarioForm.patchValue({
+    fullName: inscripcion.fullName,
+    email: inscripcion.email,
+    phone: inscripcion.phone,
+    dob: inscripcion.dob,
+    activity: inscripcion.activity,
+    preferredTime: inscripcion.preferredTime,
+    peopleCount: inscripcion.peopleCount,
+    comments: inscripcion.comments,
+    terms: true // O como corresponda
+  });
+  // Opcional: podrías guardar el id para actualizar en vez de crear uno nuevo al guardar
+  this.editandoId = inscripcion.id;
+}
+
+
+ onSubmit(): void {
+  if (this.horarioForm.invalid || this.mostrarAlerta) {
+    return;
+  }
+
+  const currentUser = this.authService.getCurrentUser();
+  const inscripcion = {
+    id: this.editandoId ? this.editandoId : Date.now(),
+    ...this.horarioForm.value,
+    fechaInscripcion: new Date().toISOString(),
+    year: this.currentYear,
+    username: currentUser ? currentUser.username : null
+  };
+
+  const inscripcionesStorage = localStorage.getItem('inscripciones');
+  let inscripciones = inscripcionesStorage ? JSON.parse(inscripcionesStorage) : [];
+
+  if (this.editandoId) {
+    // Editar: reemplaza el registro existente
+    inscripciones = inscripciones.map((i: any) => i.id === this.editandoId ? inscripcion : i);
+    this.editandoId = null;
+  } else {
+    // Nuevo registro
+    inscripciones.push(inscripcion);
+  }
+
+  localStorage.setItem('inscripciones', JSON.stringify(inscripciones));
+
+  this.mostrarAlerta = true;
+  this.formEnviado = true;
+
+  this.snackBar.open('¡Inscripción enviada correctamente!', 'Cerrar', {
+    duration: 2500,
+    panelClass: ['snackbar-grande-verde']
+  });
+
+}
+
+
+
+ cargarInscripcionesUsuario(): void {
+  const inscripcionesStorage = localStorage.getItem('inscripciones');
+  this.inscripcionesUsuario = inscripcionesStorage ? JSON.parse(inscripcionesStorage) : [];
+}
+  
+
+  getCurrentDate(): string {
+  const hoy = new Date();
+  const mes = (hoy.getMonth() + 1).toString().padStart(2, '0');
+  const dia = hoy.getDate().toString().padStart(2, '0');
+  return `${hoy.getFullYear()}-${mes}-${dia}`;
+}
+
+editandoId: number | null = null;
+
+
+onActividadSeleccionada(actividad: { imagen: string; titulo: string; horario: string }) {
+  // Normaliza el valor para que coincida con el select
+  let value = '';
+  switch (actividad.titulo.toLowerCase()) {
+    case 'boxeo':
+      value = 'boxeo';
+      break;
+    case 'mma':
+      value = 'mma';
+      break;
+    case 'zumba':
+      value = 'zumba';
+      break;
+    case 'pesas':
+      value = 'pesas';
+      break;
+    default:
+      value = '';
+  }
+
+  this.horarioForm.patchValue({
+    activity: value
+  });
+
+  this.mostrarAlerta = true;
+  setTimeout(() => {
+    this.mostrarAlerta = false;
+  }, 2000);
+}
+}
+
+

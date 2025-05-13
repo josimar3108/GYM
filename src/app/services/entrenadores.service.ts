@@ -5,6 +5,7 @@ import { Observable,map } from 'rxjs';
 
 export interface Entrenador{
   nombre:string;
+  id: number;
   descripcion:string;
   edad:number;
   especialidad:string;

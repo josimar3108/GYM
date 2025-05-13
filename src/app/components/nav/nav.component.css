@@ -5,6 +5,12 @@ body {
     color: #fff;
 }
 
+p{
+  color: rgb(255, 255, 255);
+  font-size: 1.5rem;
+   font-family: "Bebas Neue", sans-serif;
+}
+
 nav {
     display: flex;
     justify-content: space-between;

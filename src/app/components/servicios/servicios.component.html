@@ -1,59 +1,89 @@
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+<mat-toolbar color="primary" class="mb-4 shadow">
+  <span class="fs-3 fw-bold w-100 text-center">GYM - Planes y Entrenadores</span>
+</mat-toolbar>
 
-<div id="planes-section">
-    <h2 class="titulo">Planes Disponibles</h2>
-    <div class="card-group row row-cols-1 row-cols-lg-4 g-4">
-        <div class="card h-100 animate__animated">
-            <h3 class="text-center">Plan Básico</h3>
-            <img [src]="plan1" alt="Plan Básico" width="250">
-            <ul>
-                <li>Acceso a pesas</li>
-                <li>Área de cardio</li>
-                <li>Horarios libres</li>
+<div id="planes-section" class="mb-5">
+  <h2 class="titulo text-center text-light mb-4">Planes Disponibles</h2>
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 justify-content-center">
+    @for (plan of planes; track plan.nombre) {
+      <div class="col d-flex">
+        <mat-card class="h-100 w-100 bg-dark text-light shadow plan-card">
+          <mat-card-header>
+            <mat-card-title class="text-center fs-4 text-primary">{{ plan.nombre }}</mat-card-title>
+          </mat-card-header>
+          <img mat-card-image [src]="plan.imagen" [alt]="plan.nombre" class="mx-auto mt-3 rounded" style="max-width:220px;">
+          <mat-card-content>
+            <ul class="mt-3 mb-2">
+              @for (item of plan.caracteristicas; track item) {
+                <li class="fs-5">{{ item }}</li>
+              }
             </ul>
-            <p class="text-center"><strong>$399/mes</strong></p>
-        </div>
-
-        <div class="card h-100 animate__animated">
-            <h3 class="text-center">Plan Intermedio</h3>
-            <img [src]="plan2" alt="Plan Intermedio" width="250">
-            <ul>
-                <li>Pesas y cardio</li>
-                <li>Sesiones con nutriólogo</li>
-                <li>Clases de boxeo</li>
-            </ul>
-            <p class="text-center"><strong>$599/mes</strong></p>
-        </div>
-
-        <div class="card h-100 animate__animated">
-            <h3 class="text-center">Plan Premium</h3>
-            <img [src]="plan3" alt="Plan Premium" width="250">
-            <ul>
-                <li>Todo incluido del plan intermedio</li>
-                <li>Clases personalizadas</li>
-                <li>Acceso a spa y masajes</li>
-            </ul>
-            <p class="text-center"><strong>$899/mes</strong></p>
-        </div>
-    </div>
+            <p class="text-center fs-4 mt-3"><strong class="text-success">{{ plan.precio }}</strong></p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    }
+  </div>
 </div>
 
 
-<div id="entrenadores-section">  
-    <h2 class="titulo">Entrenadores</h2>
-    @if (entrenadores.length > 0) {
-    <div class="card-group row row-cols-1 row-cols-lg-5 g-4">
-        @for (entrenador of entrenadores; track entrenador.nombre) {
-        <div class="card h-100 animate__animated">
-            <h3>{{ entrenador.nombre }}</h3>
-            <img [src]="entrenador.image" alt="{{ entrenador.nombre }}" width="250">
-            <p>Especialidad: {{entrenador.especialidad}}</p>
-            <p>{{ entrenador.descripcion }}</p>
-            <strong>Edad: {{ entrenador.edad }} años</strong>
-        </div>
-        }
-    </div>
-    } @else {
-    <p>Cargando productos...</p>
+<div class="buscador-entrenador-container my-5 d-flex justify-content-center">
+  <mat-form-field appearance="outline" class="w-50 buscador-dark">
+    <mat-label class="text-white">Buscar entrenador, especialidad o descripción</mat-label>
+    <input matInput [(ngModel)]="busqueda" (input)="buscar()" class="text-light">
+    <button mat-icon-button matSuffix disabled>
+      <mat-icon color="primary">search</mat-icon>
+    </button>
+  </mat-form-field>
+</div>
+
+<div id="entrenadores-section">
+  <h2 class="titulo text-center text-light mb-4">Entrenadores</h2>
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 justify-content-center">
+   @for (entrenador of entrenadoresFiltrados; track entrenador.nombre) {
+  <div class="col d-flex">
+  <mat-card
+  class="h-100 w-100 bg-dark text-light shadow entrenador-card"
+  [ngClass]="{'entrenador-seleccionado': selectedEntrenadorId === entrenador.id}"
+  (click)="seleccionarEntrenador(entrenador.id)"
+>
+      <img mat-card-image [src]="entrenador.image" [alt]="entrenador.nombre" class="mx-auto mt-3 rounded-circle" style="max-width:160px;">
+      <mat-card-content>
+        <h5 class="text-primary text-center mt-3">{{ entrenador.nombre }}</h5>
+        <p class="text-center mb-1">{{ entrenador.descripcion }}</p>
+        <p class="text-center mb-1"><strong>Edad:</strong> {{ entrenador.edad }}</p>
+        <p class="text-center mb-1"><strong>Especialidad:</strong> {{ entrenador.especialidad }}</p>
+      </mat-card-content>
+      <mat-card-actions class="justify-content-center">
+        <a mat-raised-button color="primary" [routerLink]="['/servicios', entrenador.id]">
+          <mat-icon>info</mat-icon>
+          Ver detalle
+        </a>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+}
+    @if (entrenadoresFiltrados.length === 0) {
+      <div class="col-12">
+        <mat-card class="alert alert-warning text-center fs-4 my-5 bg-dark text-light border-0">
+          <mat-icon color="warn">warning</mat-icon>
+          Datos no encontrados
+        </mat-card>
+      </div>
     }
+  </div>
+
+
+<div class="video-container my-5">
+  <div class="video-bg">
+    <iframe
+      width="800"
+      height="450"
+      [src]="'https://www.youtube.com/embed/c0xT9NBCatM' | safe"
+      title="Video de presentación"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen>
+    </iframe>
+  </div>
 </div>

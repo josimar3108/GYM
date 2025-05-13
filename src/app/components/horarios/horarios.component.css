@@ -7,6 +7,10 @@ yacht-list {
     padding: 50px 20px;
     color: #fff;
 }
+
+
+
+
 .yacht-list h2 {
     font-size: 2.5rem;
     margin-bottom: 20px;
@@ -79,16 +83,16 @@ yacht-list {
   padding: 40px 20px !important;
   font-family: "Bebas Neue", sans-serif ;
   font-size: 1.5rem;
-  margin-bottom: 40px;
+  margin-bottom: 0;
   color: white;
 }
 
-.container {
+/* .container {
   max-width: 1200px !important;
   margin: 0 auto !important;
   text-align: center;
   
-}
+} */
 
 
 .full-calendar {
@@ -201,4 +205,24 @@ yacht-list {
 
 .calendar-day:hover {
     background: rgba(255, 255, 255, 0.15) !important;
+}
+
+.container2{
+  width: 100%;
+  height: auto;
+  background-color: #020822 !important;  
+}
+
+.snackbar-grande-verde {
+  background: #2ecc40 !important;
+  color: #fff !important;
+  font-size: 1.4rem !important;
+  font-weight: bold !important;
+  min-width: 350px !important;
+  max-width: 90vw !important;
+  text-align: center;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 24px 0 rgba(46,204,64,0.25);
+  letter-spacing: 1px;
+  padding: 1.2rem 2rem !important;
 }

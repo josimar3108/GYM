@@ -20,25 +20,40 @@ export class LoginComponent {
 
   constructor(private authService: AuthService, private router: Router) {}
 
-  onSubmit() {
+  onSubmit()
+  {
     const user = this.authService.login(this.username, this.password);
-    if (user) { // Ahora user es de tipo User | null
-      this.welcomeName = user.fullName; // Correcto: user tiene la propiedad fullName
+
+    if (user)
+    {
+      this.welcomeName = user.fullName;
       this.showWelcomeMessage = true;
       this.errorMessage = '';
-      
+
       setTimeout(() => {
         this.showWelcomeMessage = false;
-        this.router.navigate(['/']);
+
+        // Redirige a /index y recarga la página
+        this.router.navigateByUrl('/index').then(() => {
+          window.location.reload();
+        });
       }, 3000);
-    } else {
+    }
+    else
+    {
       this.errorMessage = 'Usuario o contraseña incorrectos';
       this.showWelcomeMessage = false;
     }
   }
 
-  closeWelcomeMessage() {
+  closeWelcomeMessage()
+  {
     this.showWelcomeMessage = false;
-    this.router.navigate(['/']);
+
+    // Redirige a /index y recarga la página
+    this.router.navigateByUrl('/index').then(() => {
+      //Recargar y redirigir al home para que se actualice el nav y mostrar el nombre del admin
+      window.location.reload();
+    });
   }
 }

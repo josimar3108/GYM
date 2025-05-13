@@ -1,14 +1,121 @@
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+<div id="contacto-section" class="w-100">
 
-<div id="contacto-section">
-  <h2 class="titulo">Contacto</h2>
+  <!-- Sección de equipo o imágenes -->
   <div class="card-group row row-cols-1 row-cols-lg-3 g-4">
-    @for (integrante of equipo; track integrante.nombre) {
-      <div class="card h-100 animate__animated">
+    @for (integrante of equipo; track integrante.nombre)
+    {
+      <div class="card h-auto animate__animated text-center p-3">
         <h3>{{ integrante.nombre }}</h3>
-        <img [src]="integrante.imagen" [alt]="integrante.nombre" width="250">
-        <p>Rol: {{ integrante.rol }}</p>
+        <img [src]="integrante.imagen" [alt]="integrante.nombre" width="250" class="mx-auto">
+        <p class="mt-2">Rol: {{ integrante.rol }}</p>
       </div>
     }
   </div>
+
+  <!-- Formulario de contacto -->
+  <form [formGroup]="contactoForm" (ngSubmit)="onSubmit()" class="contact-form mb-5">
+    <h2 class="display-5 my-4 text-center">Contáctanos</h2>
+    <div class="mb-4">
+      <label for="nombre" class="form-label fs-4">Nombre</label>
+      <input
+        type="text"
+        id="nombre"
+        class="form-control form-control-lg"
+        formControlName="nombre"
+        required
+      >
+      @if (contactoForm.get('nombre')?.touched && contactoForm.get('nombre')?.invalid) {
+        <div class="text-danger mt-1 fs-5">El nombre es obligatorio.</div>
+      }
+    </div>
+
+    <div class="mb-4">
+      <label for="email" class="form-label fs-4">Correo electrónico</label>
+      <input
+        type="email"
+        id="email"
+        class="form-control form-control-lg"
+        formControlName="email"
+        required
+      >
+      @if (contactoForm.get('email')?.touched && contactoForm.get('email')?.invalid) {
+        <div class="text-danger mt-1 fs-5">Ingresa un correo válido.</div>
+      }
+    </div>
+
+    <div class="mb-4">
+      <label for="mensaje" class="form-label fs-4">Mensaje</label>
+      <textarea
+        id="mensaje"
+        class="form-control form-control-lg"
+        rows="5"
+        formControlName="mensaje"
+        required
+      ></textarea>
+      @if (contactoForm.get('mensaje')?.touched && contactoForm.get('mensaje')?.invalid) {
+        <div class="text-danger mt-1 fs-5">El mensaje es obligatorio.</div>
+      }
+    </div>
+
+    <div class="text-center">
+      <button type="submit" class="btn btn-primary btn-lg px-5 py-3 fs-4" [disabled]="contactoForm.invalid">Enviar</button>
+    </div>
+    @if (formEnviado) {
+      <div class="alert alert-success mt-4 fs-4 text-center" role="alert">
+        ¡Gracias por tu mensaje! Te contactaremos pronto.
+      </div>
+    }
+  </form>
+@if (currentUser) {
+  @if (mensajes.length > 0) {
+    <section class="mensajes-section my-5">
+      <div class="card mensajes-card bg-dark text-light mx-auto">
+        <div class="card-header bg-primary text-white py-4">
+          <h2 class="mb-0 text-center display-4">Mensajes recibidos</h2>
+        </div>
+        <div class="card-body p-4">
+          <div class="table-responsive">
+            <table class="table table-dark table-striped mb-0 align-middle fs-4 mensajes-table">
+              <thead class="table-primary text-dark">
+                <tr>
+                  <th>Nombre</th>
+                  <th>Email</th>
+                  <th>Mensaje</th>
+                  <th>Fecha</th>
+                  <th class="text-center">Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (mensaje of mensajes; track mensaje.id) {
+                  <tr>
+                    <td>{{ mensaje.nombre }}</td>
+                    <td>{{ mensaje.email }}</td>
+                    <td>{{ mensaje.mensaje }}</td>
+                    <td>{{ mensaje.fecha | date:'short' }}</td>
+                    <td class="text-center">
+                      <button class="btn btn-danger btn-lg mb-2 me-3 px-4 py-2" (click)="eliminarMensaje(mensaje.id)">
+                        <i class="bi bi-trash"></i> Eliminar
+                      </button>
+                      <button class="btn btn-warning btn-lg mb-2 text-white px-4 py-2" (click)="editarMensaje(mensaje)">
+                        <i class="bi bi-pencil"></i> Editar
+                      </button>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  } @else {
+    <section class="mensajes-section my-5">
+      <div class="alert alert-info text-center shadow-sm py-5 fs-3" role="alert">
+        <i class="bi bi-info-circle-fill me-2"></i>
+        No hay mensajes registrados.
+      </div>
+    </section>
+  }
+}
 </div>
+

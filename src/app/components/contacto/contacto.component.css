@@ -1,8 +1,12 @@
 #contacto-section {
   padding: 60px 30px;
-  text-align: center;
+  text-align: left;
   color: white;
   background: #020822;
+}
+
+#contacto-section h2{
+  text-align: center;
 }
 
 #contacto-section h2 {
@@ -53,4 +57,51 @@
   font-size: 1.3rem;
   color: #ccc;
   margin-bottom: 8px;
+}
+
+.container{
+  width: 100%;
+  height: auto;
+}
+
+.contact-form{
+  max-width: 30%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 auto;
+  margin-bottom: 5rem;
+}
+
+
+.mensajes-section {
+  width: 100vw;
+  max-width: 100vw;
+  padding-left: 0;
+  padding-right: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.mensajes-card {
+  width: 90vw;
+  max-width: 1020px;
+  min-width: 320px;
+  margin: 0 auto;
+  border-radius: 1.5rem;
+  box-shadow: 0 0 32px 0 rgba(0,0,0,0.3);
+}
+
+.mensajes-table {
+  font-size: 1.5rem;
+}
+
+@media (max-width: 500px) {
+  .mensajes-card {
+    width: 98vw;
+    padding: 0;
+  }
+  .mensajes-table {
+    font-size: 1.1rem;
+  }
 }
