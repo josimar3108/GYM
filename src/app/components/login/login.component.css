@@ -13,7 +13,9 @@
   align-items: center;
   min-height: 100vh;
   background: no-repeat;
-  background-image:url('/assets/fondo.jpg')  ;
+  background-image: url('/gym/fondo.jpg');
+
+
     background-position: center;
     background-size: cover;
 }

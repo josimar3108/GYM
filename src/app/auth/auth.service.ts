@@ -14,7 +14,7 @@ interface User {
 export class AuthService {
   private registeredUsers: User[] = [
     { username: 'josimar', password: '123', fullName: 'Josimar Maldonado Rosales' },
-    { username: 'ian', password: '456', fullName: 'Ian Hernandez Aranada' },
+    { username: 'ian', password: '456', fullName: 'Ian Hernandez Aranda' },
     { username: 'gustavo', password: '789', fullName: 'Gustavo Mojica Lamas' }
   ];
 
